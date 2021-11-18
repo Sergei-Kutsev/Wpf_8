@@ -14,18 +14,7 @@
         <CommandBinding Command="Save" Executed="SaveExecuted"/>
         <CommandBinding Command="Close" Executed="ExitExecuted" CanExecute="ExitCanExecute"/>
     </Window.CommandBindings>
-    <Window.Resources>
-        <col:ArrayList x:Key="font">
-            <sys:String>Arial</sys:String>
-            <sys:String>Times New Roman</sys:String>
-            <sys:String>Verdana</sys:String>
-        </col:ArrayList>
-        <col:ArrayList x:Key="size">
-            <sys:String>14</sys:String>
-            <sys:String>15</sys:String>
-            <sys:String>16</sys:String>
-        </col:ArrayList>
-    </Window.Resources>
+   
     <DockPanel>
         <Menu DockPanel.Dock="Top"  Padding="5" Background="#FFD6E4EA" BorderThickness="0,0,0,1" >
             <MenuItem Header="_Файл" Padding="15,2" FontWeight="SemiBold"  BorderThickness="1" BorderBrush="#FFABB3BB"  >
