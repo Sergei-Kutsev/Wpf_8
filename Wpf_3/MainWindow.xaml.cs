@@ -15,26 +15,41 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Wpf_8
+namespace Wpf_9
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-       
         public MainWindow()
         {
             InitializeComponent();
+            List<string> list = new List<string>() { "Светлая тема", "Темная тема" };
+            ThemeSelect.ItemsSource = list;
+            ThemeSelect.SelectionChanged += ThemeChange;
+            ThemeSelect.SelectedIndex = 0;
         }
+
+        private void ThemeChange(object sender, SelectionChangedEventArgs e)
+        {
+            int styleIndex = ThemeSelect.SelectedIndex;
+            Uri uri = new Uri("White.xaml", UriKind.Relative);
+            if (styleIndex == 1)
+            { uri = new Uri("Dark.xaml", UriKind.Relative); }
+
+            ResourceDictionary resource = Application.LoadComponent(uri) as ResourceDictionary;
+            Application.Current.Resources.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resource);
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string fontName=(sender as ComboBox).SelectedItem as string;
-            if (textBox!=null)
+            string fontName = (sender as ComboBox).SelectedItem as string;
+            if (textBox != null)
             {
                 textBox.FontFamily = new FontFamily(fontName);
             }
-            
         }
 
         private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -45,21 +60,20 @@ namespace Wpf_8
             {
                 textBox.FontSize = Fontsize;
             }
-
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(textBox.FontWeight == FontWeights.Normal)
-            textBox.FontWeight = FontWeights.Bold;
-             else
-                textBox.FontWeight =FontWeights.Normal;
+            if (textBox.FontWeight == FontWeights.Normal)
+                textBox.FontWeight = FontWeights.Bold;
+            else
+                textBox.FontWeight = FontWeights.Normal;
         }
 
         private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
-            if(textBox.FontStyle == FontStyles.Normal)
-            textBox.FontStyle=FontStyles.Italic;
+            if (textBox.FontStyle == FontStyles.Normal)
+                textBox.FontStyle = FontStyles.Italic;
             else
                 textBox.FontStyle = FontStyles.Normal;
         }
@@ -79,7 +93,7 @@ namespace Wpf_8
         }
         private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
         {
-                textBox.Foreground = Brushes.Red;
+            textBox.Foreground = Brushes.Red;
         }
 
         private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -88,7 +102,6 @@ namespace Wpf_8
             openFile.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             if (openFile.ShowDialog() == true)
             {
-
                 textBox.Text = File.ReadAllText(openFile.FileName);
             }
         }
